@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "hft_abm_smc_abc"
+version = "0.1.0"
+description = ""
+authors = ["Kelly Goosen <kelly.goosen@baringa.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+numpy = "^1.18.4"
+hurst = "^0.0.5"
+scipy = "^1.4.1"
+pandas = "^1.0.3"
+pyprof2calltree = "^1.4.5"
+pyabc = "^0.10.3"
+
+[tool.poetry.dev-dependencies]
+pytest = "^5.2"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
