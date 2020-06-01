@@ -1,0 +1,1 @@
+sqlite:////home/gsnkel001/Working_Directory/02_ProcessedData/Adaptive2NormDistance_230_t=1_nonunifacc_eps091590666516.0979617/resultsAdaptive2NormDistance_230_t=1_nonunifacc_eps091590666516.0979617.db

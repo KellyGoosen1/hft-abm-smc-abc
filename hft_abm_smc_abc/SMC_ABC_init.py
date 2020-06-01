@@ -13,7 +13,7 @@ from hft_abm_smc_abc.config import DELTA_TRUE, MU_TRUE, ALPHA_TRUE, LAMBDA0_TRUE
     WORK_DIR, temp_output_folder, version_number, PROCESSED_FOLDER, \
     DELTA_MIN, DELTA_MAX, MU_MIN, MU_MAX, ALPHA_MIN, ALPHA_MAX, LAMBDA0_MIN, LAMBDA0_MAX,\
     C_LAMBDA_MIN, C_LAMBDA_MAX, DELTAS_MIN, DELTAS_MAX, SMCABC_DISTANCE, SMCABC_POPULATION_SIZE, SMCABC_SAMPLER,\
-    SMCABC_TRANSITIONS, SMCABC_EPS
+    SMCABC_TRANSITIONS, SMCABC_EPS, SMCABC_ACCEPTOR
 
 
 
@@ -97,14 +97,15 @@ def preisSim(parameters):
         positive_price_path = accept_pos(p.intradayPrice)
 
     # Log and divide price path by 1000, Convert to pandas dataframe
-    price_path = pd.DataFrame(np.log(p.intradayPrice / PRICE_PATH_DIVIDER))
+    price_path = pd.DataFrame(np.log(p.intradayPrice/ PRICE_PATH_DIVIDER))
     return price_path
 
 def sum_stat_sim(parameters):
 
     price_path = preisSim(parameters)
 
-    p_true = pd.read_csv(os.path.join(PROCESSED_FOLDER, "Log_Original_Price_Bars_2300.csv"), header=None)
+    p_true = pd.read_csv(os.path.join(temp_output_folder, "p_true.csv"),
+                         header=None)
 
     # summary statistics
     return all_summary_stats(price_path, p_true)
@@ -141,7 +142,7 @@ param_true = {"delta": DELTA_TRUE,
 
 # Simulate "true" summary statistics
 p_true = preisSim(param_true)
-p_true.to_csv(os.path.join(temp_output_folder, "p_true.csv"),
+p_true.to_csv(os.path.join(temp_output_folder, "p_true.csv"), header=False,
               index=False)
 # p_true = c
 # p_true = pd.DataFrame(p_true)
@@ -155,8 +156,8 @@ abc = ABCSMC(models=sum_stat_sim,
              population_size=SMCABC_POPULATION_SIZE,
              sampler=SMCABC_SAMPLER,
              transitions=SMCABC_TRANSITIONS,
-             eps=SMCABC_EPS)#,
-             #acceptor=UniformAcceptor(use_complete_history=True))
+             eps=SMCABC_EPS,
+             acceptor=SMCABC_ACCEPTOR)
 
 # Set up SQL storage facility
 db = "sqlite:///" + os.path.join(temp_output_folder, "results" + version_number + ".db")

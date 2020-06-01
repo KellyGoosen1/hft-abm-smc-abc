@@ -99,7 +99,7 @@ def preisSim(parameters):
         positive_price_path = accept_pos(p.intradayPrice)
 
     # Log and divide price path by 1000, Convert to pandas dataframe
-    price_path = pd.DataFrame(np.log(p.intradayPrice / PRICE_PATH_DIVIDER))
+    price_path = pd.DataFrame(np.log(p.intradayPrice  / PRICE_PATH_DIVIDER))
     return price_path
 
 
@@ -123,14 +123,15 @@ def main():
 
 
 p_true_SS = main()
-p_true_SS.to_csv("new_test_case.csv", index=False)
+p_true_SS.to_csv("new_test_case.csv", index=False, header=False)
 
 
-original = pd.read_csv("original_test_case.csv")
+original = pd.read_csv("original_test_case.csv", header=None)
 
-new_case = pd.read_csv("new_test_case.csv")
+new_case = pd.read_csv("new_test_case.csv", header=None)
 
-print(all(original==new_case))
+
+print(all(round(original.apply(float, axis=1),0)==round(new_case.apply(float, axis=1),0)))
 
 
 # profiler = Profile()

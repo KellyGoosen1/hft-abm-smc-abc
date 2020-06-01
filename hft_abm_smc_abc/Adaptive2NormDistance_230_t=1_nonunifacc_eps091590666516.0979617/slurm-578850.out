@@ -1,0 +1,17 @@
+INFO:History:Start <ABCSMC(id=1, start_time=2020-05-28 13:48:41.427332, end_time=None)>
+INFO:ABC:Calibration sample before t=0.
+Python 3.7.3 | packaged by conda-forge | (default, Jul  1 2019, 21:52:21) 
+[GCC 7.3.0] on linux
+1
+Adaptive2NormDistance_230_t=1_nonunifacc_eps091590666516.0979617
+INFO:ABC:t: 0, eps: 1.5.
+INFO:ABC:Acceptance rate: 30 / 69 = 4.3478e-01, ESS=3.0000e+01.
+INFO:ABC:t: 1, eps: 0.035043863620774364.
+INFO:ABC:Acceptance rate: 30 / 556 = 5.3957e-02, ESS=1.7298e+01.
+INFO:ABC:t: 2, eps: 0.0427625613996465.
+INFO:ABC:Acceptance rate: 30 / 659 = 4.5524e-02, ESS=4.8811e+00.
+INFO:ABC:t: 3, eps: 0.10202325025639418.
+INFO:ABC:Acceptance rate: 30 / 4584 = 6.5445e-03, ESS=1.3083e+01.
+INFO:History:Done <ABCSMC(id=1, start_time=2020-05-28 13:48:41.427332, end_time=2020-05-28 14:10:24.241363)>
+True
+[<ABCSMC(id=1, start_time=2020-05-28 13:48:41.427332, end_time=2020-05-28 14:10:24.241363)>]
