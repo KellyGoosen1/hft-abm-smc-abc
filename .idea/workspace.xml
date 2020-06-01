@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="1139fb3d-e3fc-4406-a403-a20ed25b1632" name="Default Changelist" comment="" />
+    <list default="true" id="1139fb3d-e3fc-4406-a403-a20ed25b1632" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/opensqlhistory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC_init.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC_init.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/new_test_case.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/new_test_case.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/original_test_case.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/original_test_case.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +34,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Dissertation/pythonCodeVersions/ABC_HFT_Git/notebooks/Summarise_database.ipynb" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -37,7 +49,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.SMC_ABC">
+  <component name="RunManager" selected="Python.test">
     <configuration name="SMC_ABC" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="hft_abm_smc_abc" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -52,6 +64,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="opensqlhistory" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="hft_abm_smc_abc" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/opensqlhistory.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -106,8 +140,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.SMC_ABC" />
         <item itemvalue="Python.test" />
+        <item itemvalue="Python.opensqlhistory" />
+        <item itemvalue="Python.SMC_ABC" />
         <item itemvalue="Python.test_case2" />
       </list>
     </recent_temporary>
@@ -122,7 +157,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590483391662</updated>
-      <workItem from="1590483399949" duration="20692000" />
+      <workItem from="1590483399949" duration="50778000" />
     </task>
     <servers />
   </component>
@@ -145,15 +180,16 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tests/test.py</url>
-          <line>132</line>
+          <line>133</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/hft_abm_smc_abc$test.coverage" NAME="test Coverage Results" MODIFIED="1590509824897" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/hft_abm_smc_abc$test.coverage" NAME="test Coverage Results" MODIFIED="1590747504258" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
     <SUITE FILE_PATH="coverage/hft_abm_smc_abc$SMC_ABC.coverage" NAME="SMC_ABC Coverage Results" MODIFIED="1590583516900" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/hft_abm_smc_abc" />
     <SUITE FILE_PATH="coverage/hft_abm_smc_abc$test_case2.coverage" NAME="test_case2 Coverage Results" MODIFIED="1590489676996" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/tests" />
+    <SUITE FILE_PATH="coverage/hft_abm_smc_abc$opensqlhistory.coverage" NAME="opensqlhistory Coverage Results" MODIFIED="1590665190160" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

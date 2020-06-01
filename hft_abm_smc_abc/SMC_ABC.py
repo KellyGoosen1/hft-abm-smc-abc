@@ -10,6 +10,9 @@ from hft_abm_smc_abc.config import temp_output_folder, version_number, smcabc_mi
     smcabc_max_nr_populations, smcabc_min_acceptance_rate
 import pickle
 import os
+import random
+
+random.seed(4)
 
 print(sge.nr_cores_available())
 print(version_number)
