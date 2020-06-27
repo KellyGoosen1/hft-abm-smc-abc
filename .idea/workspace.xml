@@ -2,17 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1139fb3d-e3fc-4406-a403-a20ed25b1632" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/opensqlhistory.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hft_abm_smc_abc/Adaptive2NormDistance_230_t=1_nonunifacc_eps091590666516.0979617/ARMA_example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC_init.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC_init.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/poetry.lock" beforeDir="false" afterPath="$PROJECT_DIR$/poetry.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pyproject.toml" beforeDir="false" afterPath="$PROJECT_DIR$/pyproject.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/new_test_case.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/new_test_case.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/original_test_case.csv" beforeDir="false" afterPath="$PROJECT_DIR$/tests/original_test_case.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -157,7 +150,8 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1590483391662</updated>
-      <workItem from="1590483399949" duration="50778000" />
+      <workItem from="1590483399949" duration="51044000" />
+      <workItem from="1593246991834" duration="9008000" />
     </task>
     <servers />
   </component>
@@ -169,7 +163,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
