@@ -7,10 +7,12 @@ import pyabc.visualization
 import logging
 import statsmodels as sm
 from statsmodels import tsa
-from statsmodels.tsa import arima_process, arima_model
+from statsmodels.tsa import arima_process, arima_model, stattools
 from pyabc import Distribution, RV, History
 import pyabc
-
+from hurst import compute_Hc
+from scipy import stats
+import pandas as pd
 
 np.random.seed(12345)
 
@@ -19,6 +21,53 @@ df_logger = logging.getLogger('Distance')
 df_logger.setLevel(logging.DEBUG)
 
 
+
+def summary_stats_extra(x):
+    """outputs additional summary statistics: skewness, kurtosis, Hurst"""
+    #
+    # try:
+    #     H, c, data = compute_Hc(x, kind='price', simplified=True)
+    # except Exception as e:
+    #     H = 0.25
+    #     print(e)
+
+    return {"skew": x.skew(),
+            "kurt": x.kurt()#,
+            # "hurst": H
+            }
+
+def all_summary_stats(price_sim, price_obs):
+    """ouptuts all summary statistics of price path compared to true price path (path_obs)"""
+
+    # count, mean, std, min, 25%, 50%, 75%, max
+    s1 = price_sim[0].describe()
+
+    # skew, kurt, hurst
+    s2 = summary_stats_extra(price_sim[0])
+
+    # Kolmogorov Smirnov 2 sample test statistic (if 0 - identical)
+    ks_stat = {"KS": stats.ks_2samp(np.ravel(price_sim), np.ravel(price_obs))[0]}
+
+    # acf
+    acf = sm.tsa.stattools.acf(price_sim, unbiased=False, nlags=5, qstat=False, fft=None, alpha=None, missing='none')
+
+    return {"mean": s1.loc["mean"],
+            "std": s1.loc["std"],
+            **s2,
+            **ks_stat,
+            "acf1": acf[1],
+            "acf2": acf[2],
+            "acf3": acf[3],
+            "acf4": acf[4],
+            "acf5": acf[5]
+            }
+
+def sum_stat_sim(parameters):
+
+    price_path = arma_model(parameters)
+
+    # summary statistics
+    return all_summary_stats(price_path, price_obs)
 
 # model definition
 def arma_model(p):
@@ -35,26 +84,26 @@ def arma_model(p):
 
     y = sm.tsa.arima_process.arma_generate_sample(ar, ma, 500)
 
-    ss = {}
-    for j in range(500):
-        ss['p0_' + str(j)] = y[j]
-
-    return ss
+    return pd.DataFrame(y)
 
 # true model parameter
-param_dict = {"ar1": -0.75, "ma1":0.65}
+param_dict = {"ar1": 0.7, "ma1":0.2}
 
 # observation
-ss_dict = arma_model(param_dict)
+price_obs = arma_model(param_dict)
+price_obs[0].plot()
+plt.show()
+
+
 
 # test optimisation:
-# Fits ARMA(p,q) model using exact maximum likelihood via Kalman filter.
-model_fit = sm.tsa.arima_model.ARMA(list(ss_dict.values()), (1, 1)).fit(trend='nc', disp=0)
+#Fits ARMA(p,q) model using exact maximum likelihood via Kalman filter.
+model_fit = sm.tsa.arima_model.ARMA(list(price_obs.values), (1, 1)).fit(trend='nc', disp=0)
 model_fit.params
 
 # prior distribution
 # Parameters as Random Variables
-prior = Distribution(ar1=RV("uniform", -1, 0.5),
+prior = Distribution(ar1=RV("uniform", 0, 1),
                      ma1=RV("uniform", 0, 1))
 
 # database
@@ -63,23 +112,24 @@ db_path = pyabc.create_sqlite_db_id(file_="arma_model1.db")
 distance_adaptive = pyabc.AdaptivePNormDistance(p=2, scale_function=pyabc.distance.root_mean_square_deviation)
 
 abc = pyabc.ABCSMC(
-    arma_model, prior, distance_adaptive,
+    sum_stat_sim, prior, distance_adaptive,
     population_size=100,
     acceptor=pyabc.UniformAcceptor(use_complete_history=True))
 
-abc.new(db_path, ss_dict)
+ss_obs = all_summary_stats(price_obs,price_obs)
+abc.new(db_path, ss_obs)
 
-history1 = abc.run(minimum_epsilon=.1, max_nr_populations=8)
+history1 = abc.run(minimum_epsilon=.001, max_nr_populations=10)
 
-from pyabc.visualization import plot_kde_matrix
-df, w = history1.get_distribution(m=0, t=7)
+from pyabc.visualization import plot_kde_matrix, plot_kde_2d
+df, w = history1.get_distribution(m=0, t=9)
 plot_kde_matrix(df, w);
 plt.show()
 
 
 def plot_coonvergence(history, parameter, range_min, range_max, true_value, ax):
     #fig, ax = plt.subplots()
-    for t in range(history.max_t-1):
+    for t in range(history.max_t):
         df, w = history.get_distribution(m=0, t=t)
         pyabc.visualization.plot_kde_1d(
             df, w,
@@ -91,6 +141,24 @@ def plot_coonvergence(history, parameter, range_min, range_max, true_value, ax):
 
 
 fig, axs = plt.subplots(2,1)
-plot_coonvergence(history1, 'ar1', -1, 0.5, -0.75, ax=axs[0])
-plot_coonvergence(history1, 'ma1', 0, 1, 0.65, ax=axs[1])
+plot_coonvergence(history1, 'ar1', 0, 1, 0.7, ax=axs[0])
+plot_coonvergence(history1, 'ma1', 0, 1, 0.2, ax=axs[1])
 plt.show()
+
+fig, axs = plt.subplots(6, 1)
+for t in range(6):
+
+    df, w = abc.history.get_distribution(0, t)
+    plot_kde_2d(df, w, "ar1", "ma1",
+                      xmin=0, xmax=1,
+                      ymin=0, ymax=1,
+                      numx=100, numy=100, ax=axs[t])
+    axs[t].scatter([0.7], [0.2],
+               edgecolor="black",
+               facecolor="white",
+               label="Observation");
+    axs[t].legend();
+    axs[t].set_title("PDF t={}".format(t+1))
+
+plt.show()
+
