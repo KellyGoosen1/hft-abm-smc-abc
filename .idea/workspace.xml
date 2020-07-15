@@ -25,7 +25,7 @@
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Dissertation/pythonCodeVersions/ABC_HFT_Git/notebooks/Summarise_database.ipynb" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Dissertation/Images/Calibration Images/ARMA_calibration.png" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -172,7 +172,9 @@
       <option name="presentableId" value="Default" />
       <updated>1590483391662</updated>
       <workItem from="1590483399949" duration="51044000" />
-      <workItem from="1593246991834" duration="20529000" />
+      <workItem from="1593246991834" duration="22361000" />
+      <workItem from="1594020973518" duration="599000" />
+      <workItem from="1594646480310" duration="13667000" />
     </task>
     <servers />
   </component>
