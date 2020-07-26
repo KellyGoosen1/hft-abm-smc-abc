@@ -8,11 +8,13 @@ import logging
 import statsmodels as sm
 from statsmodels import tsa
 from statsmodels.tsa import arima_process, arima_model, stattools
-from pyabc import Distribution, RV, History
+from pyabc import Distribution, RV, History, MedianEpsilon
 import pyabc
 from hurst import compute_Hc
 from scipy import stats
 import pandas as pd
+from hft_abm_smc_abc.config import SMCABC_DISTANCE, SMCABC_SAMPLER, \
+    SMCABC_TRANSITIONS, SMCABC_EPS, SMCABC_ACCEPTOR
 
 
 np.random.seed(12345)
@@ -50,7 +52,7 @@ def all_summary_stats(price_sim, price_obs):
     ks_stat = {"KS": stats.ks_2samp(np.ravel(price_sim), np.ravel(price_obs))[0]}
 
     # acf
-    acf = sm.tsa.stattools.acf(price_sim, unbiased=False, nlags=5, qstat=False, fft=None, alpha=None, missing='none')
+    acf = sm.tsa.stattools.acf(price_sim[0], unbiased=False, nlags=5, qstat=False, fft=None, alpha=None, missing='none')
 
     return {"mean": s1.loc["mean"],
             "std": s1.loc["std"],
@@ -110,12 +112,13 @@ prior = Distribution(ar1=RV("uniform", 0, 1),
 # database
 db_path = pyabc.create_sqlite_db_id(file_="arma_model1.db")
 
-distance_adaptive = pyabc.AdaptivePNormDistance(p=2, scale_function=pyabc.distance.root_mean_square_deviation)
-
 abc = pyabc.ABCSMC(
-    sum_stat_sim, prior, distance_adaptive,
-    population_size=100,
-    acceptor=pyabc.UniformAcceptor(use_complete_history=True))
+    sum_stat_sim, prior, population_size=100,
+    distance_function=SMCABC_DISTANCE,
+    transitions=SMCABC_TRANSITIONS,
+    eps=MedianEpsilon(1),
+    acceptor=SMCABC_ACCEPTOR
+)
 
 ss_obs = all_summary_stats(price_obs,price_obs)
 abc.new(db_path, ss_obs)

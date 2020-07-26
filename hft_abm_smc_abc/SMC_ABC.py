@@ -11,6 +11,8 @@ from hft_abm_smc_abc.config import temp_output_folder, version_number, smcabc_mi
 import pickle
 import os
 import random
+import logging
+import os
 
 random.seed(4)
 
@@ -18,6 +20,14 @@ print(sge.nr_cores_available())
 print(version_number)
 
 if __name__ == '__main__':
+
+    os.environ['NUMEXPR_MAX_THREADS'] = '40'
+    print("Reutrn NUMEXPR_MAX_THREADS: " + os.environ.get('NUMEXPR_MAX_THREADS'))
+
+
+    # for debugging
+    df_logger = logging.getLogger('Distance')
+    df_logger.setLevel(logging.DEBUG)
 
     # Run SMCABC
     history = abc.run(minimum_epsilon=smcabc_minimum_epsilon,

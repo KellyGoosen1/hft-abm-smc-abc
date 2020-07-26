@@ -7,6 +7,10 @@ import pandas as pd
 import os
 from hurst import compute_Hc
 from scipy import stats
+import statsmodels as sm
+from statsmodels import tsa
+from statsmodels.tsa import arima_process, arima_model, stattools
+
 
 from pyabc import Distribution, RV, ABCSMC, UniformAcceptor
 from hft_abm_smc_abc.config import DELTA_TRUE, MU_TRUE, ALPHA_TRUE, LAMBDA0_TRUE, C_LAMBDA_TRUE, DELTA_S_TRUE, \
@@ -14,8 +18,6 @@ from hft_abm_smc_abc.config import DELTA_TRUE, MU_TRUE, ALPHA_TRUE, LAMBDA0_TRUE
     DELTA_MIN, DELTA_MAX, MU_MIN, MU_MAX, ALPHA_MIN, ALPHA_MAX, LAMBDA0_MIN, LAMBDA0_MAX,\
     C_LAMBDA_MIN, C_LAMBDA_MAX, DELTAS_MIN, DELTAS_MAX, SMCABC_DISTANCE, SMCABC_POPULATION_SIZE, SMCABC_SAMPLER,\
     SMCABC_TRANSITIONS, SMCABC_EPS, SMCABC_ACCEPTOR
-
-
 
 
 def summary_stats_extra(x):
@@ -45,10 +47,20 @@ def all_summary_stats(price_sim, price_obs):
     # Kolmogorov Smirnov 2 sample test statistic (if 0 - identical)
     ks_stat = {"KS": stats.ks_2samp(np.ravel(price_sim), np.ravel(price_obs))[0]}
 
+    # acf
+    # acf = sm.tsa.stattools.acf(price_sim, unbiased=False, nlags=5, qstat=False, fft=True, alpha=None, missing='drop')
+
+
     return {"mean": s1.loc["mean"],
             "std": s1.loc["std"],
             **s2,
-            **ks_stat}
+            **ks_stat#,
+            # "acf1": acf[1],
+            # "acf2": acf[2],
+            # "acf3": acf[3],
+            # "acf4": acf[4],
+            # "acf5": acf[5]
+            }
 
 
 def accept_pos(x):
@@ -58,6 +70,9 @@ def accept_pos(x):
         return True
     else:
         return False
+
+def at_least_one_different(items):
+    return any(x != items[0] for x in items)
 
 
 def preisSim(parameters):
@@ -72,7 +87,8 @@ def preisSim(parameters):
 
     # continue until price path simulated is all positive
     positive_price_path = False
-    while not positive_price_path:
+    at_least_one_different_price_path = False
+    while (not positive_price_path) | (not at_least_one_different_price_path):
 
         # Initialize preis model class with specified parameters
         p = PreisModel(N_A=N_A,
@@ -96,9 +112,13 @@ def preisSim(parameters):
         # ensure no negative prices
         positive_price_path = accept_pos(p.intradayPrice)
 
+        # ensure all elements in price path are not identical
+        at_least_one_different_price_path = at_least_one_different(p.intradayPrice)
+
     # Log and divide price path by 1000, Convert to pandas dataframe
-    price_path = pd.DataFrame(np.log(p.intradayPrice/ PRICE_PATH_DIVIDER))
+    price_path = pd.DataFrame(np.log(p.intradayPrice / PRICE_PATH_DIVIDER))
     return price_path
+
 
 def sum_stat_sim(parameters):
 
@@ -127,25 +147,10 @@ param_true = {"delta": DELTA_TRUE,
               "C_lambda": C_LAMBDA_TRUE,
               "delta_S": DELTA_S_TRUE}
 
-
-# define distance function
-# def distance(simulation, data):
-#
-#     dist = sp.absolute(data["mean"] - simulation["mean"]) + \
-#            sp.absolute(data["std"] - simulation["std"]) + \
-#            sp.absolute(data["skew"] - simulation["skew"]) + \
-#            sp.absolute(data["kurt"] - simulation["kurt"]) + \
-#            sp.absolute(data["hurst"] - simulation["hurst"]) + \
-#            sp.absolute(simulation["KS"])
-#
-#     return dist
-
 # Simulate "true" summary statistics
 p_true = preisSim(param_true)
 p_true.to_csv(os.path.join(temp_output_folder, "p_true.csv"), header=False,
               index=False)
-# p_true = c
-# p_true = pd.DataFrame(p_true)
 
 p_true_SS = all_summary_stats(p_true, p_true)
 

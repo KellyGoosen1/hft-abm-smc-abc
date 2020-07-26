@@ -9,13 +9,14 @@ import pyabc
 
 
 # load history
-h_loaded = History("sqlite:///" +"hft_abm_smc_abc/resultsTH100_t=6_stochasticAcceptor_eps0001_seed21590917044.8407867.db")
+h_loaded = History("sqlite:///"
+                   +"hft_abm_smc_abc/resultsACF_Fixthreads2_100_TH100_t=8_uniformAcceptor_eps0001_seed41594889913.7575943.db")
 
 # check that the history is not empty
 print(h_loaded.all_runs())
 
 from pyabc.visualization import plot_kde_matrix
-df, w = h_loaded.get_distribution(m=0, t=4)
+df, w = h_loaded.get_distribution(m=0, t=5)
 plot_kde_matrix(df, w);
 plt.show()
 
@@ -39,12 +40,14 @@ plot_coonvergence(h_loaded, 'delta', DELTA_MIN, DELTA_MAX, DELTA_TRUE, ax=axs[0,
 plot_coonvergence(h_loaded, 'delta_S', DELTAS_MIN, DELTAS_MAX, DELTA_S_TRUE, ax=axs[1,0])
 plot_coonvergence(h_loaded, 'alpha', ALPHA_MIN, ALPHA_MAX, ALPHA_TRUE, ax=axs[1,1])
 plot_coonvergence(h_loaded, 'C_lambda', C_LAMBDA_MIN, C_LAMBDA_MAX, C_LAMBDA_TRUE, ax=axs[1,2])
+plt.gcf().set_size_inches((12, 8))
+plt.gcf().tight_layout()
 plt.show()
 
-_, arr_ax = plt.subplots(2, 2)
+_, arr_ax = plt.subplots(1, 2)
 
-pyabc.visualization.plot_sample_numbers(h_loaded, ax=arr_ax[0][0])
-pyabc.visualization.plot_epsilons(h_loaded, ax=arr_ax[0][1])
+pyabc.visualization.plot_sample_numbers(h_loaded, ax=arr_ax[0])
+pyabc.visualization.plot_epsilons(h_loaded, ax=arr_ax[1])
 pyabc.visualization.plot_credible_intervals(
     h_loaded, levels=[0.95], ts=[0, 1, 2, 3, 4, 5], par_names=['C_lambda'],
     show_mean=False, show_kde_max_1d=True,

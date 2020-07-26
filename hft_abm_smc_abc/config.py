@@ -2,7 +2,7 @@
 import os
 import time
 
-from pyabc import MedianEpsilon, \
+from pyabc import MedianEpsilon, MultivariateNormalTransition, \
     LocalTransition, Distribution, RV, ABCSMC, sge, \
     AdaptivePNormDistance, UniformAcceptor
 from pyabc.sampler import MulticoreEvalParallelSampler
@@ -11,7 +11,7 @@ import pyabc
 # Set version number each iteration
 WORK_DIR = os.path.dirname(os.path.dirname(__file__)) + "\\"
 
-temp_folder = "TH100_t=6_stochasticAcceptor_eps0001_seed4"
+temp_folder = "Fixthreads2_100_TH100_t=10_uniformAcceptor_eps0001_seed4"
 version_number = temp_folder + str(time.time())
 
 if os.path.dirname(WORK_DIR) == os.path.dirname('C:\\My Work Documents\\repo\\hft_abm_smc_abc\\'):
@@ -56,11 +56,11 @@ N_A = 125                               # no. market makers = no. liquidity prov
 # SMCABC parameters:
 SMCABC_DISTANCE = AdaptivePNormDistance(
     p=2, scale_function=pyabc.distance.root_mean_square_deviation)
-SMCABC_POPULATION_SIZE = 50
+SMCABC_POPULATION_SIZE = 100
 SMCABC_SAMPLER = MulticoreEvalParallelSampler(ncores)
-SMCABC_TRANSITIONS = LocalTransition(k_fraction=0.25)
-SMCABC_EPS = MedianEpsilon(1)
+SMCABC_TRANSITIONS = MultivariateNormalTransition()
+SMCABC_EPS = MedianEpsilon(0.01)
 SMCABC_ACCEPTOR = UniformAcceptor(use_complete_history=True)
 smcabc_minimum_epsilon = 0.0001
-smcabc_max_nr_populations = 6
+smcabc_max_nr_populations = 10
 smcabc_min_acceptance_rate = SMCABC_POPULATION_SIZE / 25000
