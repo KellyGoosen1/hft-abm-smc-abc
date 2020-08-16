@@ -9,7 +9,6 @@ from hft_abm_smc_abc.SMC_ABC_init import abc, db
 from hft_abm_smc_abc.config import temp_output_folder, version_number, smcabc_minimum_epsilon, \
     smcabc_max_nr_populations, smcabc_min_acceptance_rate
 import pickle
-import os
 import random
 import logging
 import os

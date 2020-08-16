@@ -11,7 +11,8 @@ import pyabc
 # Set version number each iteration
 WORK_DIR = os.path.dirname(os.path.dirname(__file__)) + "\\"
 
-temp_folder = "Fixthreads2_100_TH100_t=10_uniformAcceptor_eps0001_seed4"
+temp_folder = "Real_Data_Small_Test - Smaller Test - eps0.1_negfix_pop5"
+print(temp_folder)
 version_number = temp_folder + str(time.time())
 
 if os.path.dirname(WORK_DIR) == os.path.dirname('C:\\My Work Documents\\repo\\hft_abm_smc_abc\\'):
@@ -47,8 +48,8 @@ C_LAMBDA_MIN, C_LAMBDA_MAX = 1, 50
 DELTAS_MIN, DELTAS_MAX = 0, 0.005
 
 # Fixed Parameters
-PRICE_PATH_DIVIDER = 1000
-TIME_HORIZON = 100                     # time horizon
+PRICE_PATH_DIVIDER = 100
+TIME_HORIZON = 2300                     # time horizon
 P_0 = 238.745 * PRICE_PATH_DIVIDER      # initial price
 MC_STEPS = 10 ** 5                      # MC steps to generate variance
 N_A = 125                               # no. market makers = no. liquidity providers
@@ -56,11 +57,11 @@ N_A = 125                               # no. market makers = no. liquidity prov
 # SMCABC parameters:
 SMCABC_DISTANCE = AdaptivePNormDistance(
     p=2, scale_function=pyabc.distance.root_mean_square_deviation)
-SMCABC_POPULATION_SIZE = 100
+SMCABC_POPULATION_SIZE = 20
 SMCABC_SAMPLER = MulticoreEvalParallelSampler(ncores)
 SMCABC_TRANSITIONS = MultivariateNormalTransition()
-SMCABC_EPS = MedianEpsilon(0.01)
+SMCABC_EPS = MedianEpsilon(0.1)
 SMCABC_ACCEPTOR = UniformAcceptor(use_complete_history=True)
 smcabc_minimum_epsilon = 0.0001
-smcabc_max_nr_populations = 10
+smcabc_max_nr_populations = 5
 smcabc_min_acceptance_rate = SMCABC_POPULATION_SIZE / 25000

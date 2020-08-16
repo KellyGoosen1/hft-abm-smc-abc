@@ -3,11 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="1139fb3d-e3fc-4406-a403-a20ed25b1632" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/Adaptive2NormDistance_230_t=1_nonunifacc_eps091590666516.0979617/ARMA_example" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/Adaptive2NormDistance_230_t=1_nonunifacc_eps091590666516.0979617/ARMA_example" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC_init.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC_init.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/opensqlhistory.py" beforeDir="false" afterPath="$PROJECT_DIR$/opensqlhistory.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -180,6 +178,10 @@
       <workItem from="1594020973518" duration="599000" />
       <workItem from="1594646480310" duration="34736000" />
       <workItem from="1595234891003" duration="20000" />
+      <workItem from="1595759239316" duration="3766000" />
+      <workItem from="1595768495998" duration="760000" />
+      <workItem from="1596983614798" duration="1302000" />
+      <workItem from="1597496101991" duration="1434000" />
     </task>
     <servers />
   </component>
