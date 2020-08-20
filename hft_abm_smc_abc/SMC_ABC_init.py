@@ -122,11 +122,13 @@ def preisSim(parameters):
 def sum_stat_sim(parameters):
     price_path = preisSim(parameters)
 
-    p_true_real = pd.read_csv(os.path.join(PROCESSED_FOLDER,
-                                           "Log_Original_Price_Bars_2300.csv"), header=None)
+    p_true = pd.read_csv(os.path.join(temp_output_folder, "p_true.csv"),
+                         header=None)
+    # p_true_real = pd.read_csv(os.path.join(PROCESSED_FOLDER,
+    #                                        "Log_Original_Price_Bars_2300.csv"), header=None)
 
     # summary statistics
-    return all_summary_stats(price_path, p_true_real)
+    return all_summary_stats(price_path, p_true)
 
 
 # Parameters as Random Variables
@@ -145,11 +147,16 @@ param_true = {"delta": DELTA_TRUE,
               "C_lambda": C_LAMBDA_TRUE,
               "delta_S": DELTA_S_TRUE}
 
-# Simulate "true" summary statistics
-p_true_real = pd.read_csv(os.path.join(PROCESSED_FOLDER,
-                                       "Log_Original_Price_Bars_2300.csv"), header=None)
 
-p_true_SS = all_summary_stats(p_true_real, p_true_real)
+
+# Simulate "true" summary statistics
+p_true = preisSim(param_true)
+p_true.to_csv(os.path.join(temp_output_folder, "p_true.csv"), header=False,
+              index=False)
+# p_true_real = pd.read_csv(os.path.join(PROCESSED_FOLDER,
+#                                        "Log_Original_Price_Bars_2300.csv"), header=None)
+
+p_true_SS = all_summary_stats(p_true, p_true)
 
 # Initialise ABCSMC model parameters
 abc = ABCSMC(models=sum_stat_sim,

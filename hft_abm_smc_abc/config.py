@@ -11,7 +11,7 @@ import pyabc
 # Set version number each iteration
 WORK_DIR = os.path.dirname(os.path.dirname(__file__)) + "\\"
 
-temp_folder = "Real_Data_Small_Test - Smaller Test - eps0.1_negfix_pop5"
+temp_folder = "SyntheticData - eps0.01_negfix_pop6_pop30_T1000"
 print(temp_folder)
 version_number = temp_folder + str(time.time())
 
@@ -49,7 +49,7 @@ DELTAS_MIN, DELTAS_MAX = 0, 0.005
 
 # Fixed Parameters
 PRICE_PATH_DIVIDER = 100
-TIME_HORIZON = 2300                     # time horizon
+TIME_HORIZON = 1000                     # time horizon
 P_0 = 238.745 * PRICE_PATH_DIVIDER      # initial price
 MC_STEPS = 10 ** 5                      # MC steps to generate variance
 N_A = 125                               # no. market makers = no. liquidity providers
@@ -57,11 +57,11 @@ N_A = 125                               # no. market makers = no. liquidity prov
 # SMCABC parameters:
 SMCABC_DISTANCE = AdaptivePNormDistance(
     p=2, scale_function=pyabc.distance.root_mean_square_deviation)
-SMCABC_POPULATION_SIZE = 20
+SMCABC_POPULATION_SIZE = 30
 SMCABC_SAMPLER = MulticoreEvalParallelSampler(ncores)
 SMCABC_TRANSITIONS = MultivariateNormalTransition()
-SMCABC_EPS = MedianEpsilon(0.1)
+SMCABC_EPS = MedianEpsilon(0.01)
 SMCABC_ACCEPTOR = UniformAcceptor(use_complete_history=True)
 smcabc_minimum_epsilon = 0.0001
-smcabc_max_nr_populations = 5
+smcabc_max_nr_populations = 6
 smcabc_min_acceptance_rate = SMCABC_POPULATION_SIZE / 25000
