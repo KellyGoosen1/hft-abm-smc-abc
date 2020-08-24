@@ -651,6 +651,14 @@ test = ["testpath", "pytest", "pytest-cov"]
 
 [[package]]
 category = "main"
+description = "Import IPython notebooks as modules"
+name = "nbimporter"
+optional = false
+python-versions = "*"
+version = "0.3.2"
+
+[[package]]
+category = "main"
 description = "A web-based notebook environment for interactive computing"
 name = "notebook"
 optional = false
@@ -1373,7 +1381,7 @@ docs = ["sphinx", "jaraco.packaging (>=3.2)", "rst.linker (>=1.9)"]
 testing = ["jaraco.itertools", "func-timeout"]
 
 [metadata]
-content-hash = "08b70cb4ea49abf2d803168be10ea4815267552187ca194d9a87fd79f830045c"
+content-hash = "61cc5538a8df01fb88e1cf4bbd347554a8a39309079f2d7eb4cb165d11d46260"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -1649,6 +1657,10 @@ nbconvert = [
 nbformat = [
     {file = "nbformat-5.0.6-py3-none-any.whl", hash = "sha256:276343c78a9660ab2a63c28cc33da5f7c58c092b3f3a40b6017ae2ce6689320d"},
     {file = "nbformat-5.0.6.tar.gz", hash = "sha256:049af048ed76b95c3c44043620c17e56bc001329e07f83fec4f177f0e3d7b757"},
+]
+nbimporter = [
+    {file = "nbimporter-0.3.2-py3-none-any.whl", hash = "sha256:c84d6998a93cdbd795198a35eac8e3252bdcc82f4aa03c65a725adc57d35f241"},
+    {file = "nbimporter-0.3.2.tar.gz", hash = "sha256:f476b18d6d619475ec25357f8a8264d4665fc9023273256e409ca11f58db9390"},
 ]
 notebook = [
     {file = "notebook-6.0.3-py3-none-any.whl", hash = "sha256:3edc616c684214292994a3af05eaea4cc043f6b4247d830f3a2f209fa7639a80"},

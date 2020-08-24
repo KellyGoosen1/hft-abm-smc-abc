@@ -17,6 +17,7 @@ statsmodels = "^0.11.1"
 yfinance = "^0.1.54"
 seaborn = "^0.10.1"
 pingouin = "^0.3.7"
+nbimporter = "^0.3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
