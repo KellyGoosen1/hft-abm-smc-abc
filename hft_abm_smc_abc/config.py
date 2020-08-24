@@ -49,7 +49,7 @@ DELTAS_MIN, DELTAS_MAX = 0, 0.005
 
 # Fixed Parameters
 PRICE_PATH_DIVIDER = 100
-TIME_HORIZON = 1000                     # time horizon
+TIME_HORIZON = 3200                     # time horizon
 P_0 = 238.745 * PRICE_PATH_DIVIDER      # initial price
 MC_STEPS = 10 ** 5                      # MC steps to generate variance
 N_A = 125                               # no. market makers = no. liquidity providers

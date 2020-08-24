@@ -130,46 +130,48 @@ def sum_stat_sim(parameters):
     # summary statistics
     return all_summary_stats(price_path, p_true)
 
-
-# Parameters as Random Variables
-prior = Distribution(delta=RV("uniform", DELTA_MIN, DELTA_MAX),
-                     mu=RV("uniform", MU_MIN, MU_MAX),
-                     alpha=RV("uniform", ALPHA_MIN, ALPHA_MAX),
-                     lambda0=RV("uniform", LAMBDA0_MIN, LAMBDA0_MAX),
-                     C_lambda=RV("uniform", C_LAMBDA_MIN, C_LAMBDA_MAX),
-                     delta_S=RV("uniform", DELTAS_MIN, DELTAS_MAX))
-
-# define "true" parameters to calibrate
-param_true = {"delta": DELTA_TRUE,
-              "mu": MU_TRUE,
-              "alpha": ALPHA_TRUE,
-              "lambda0": LAMBDA0_TRUE,
-              "C_lambda": C_LAMBDA_TRUE,
-              "delta_S": DELTA_S_TRUE}
+if __name__ == '__main__':
 
 
+    # Parameters as Random Variables
+    prior = Distribution(delta=RV("uniform", DELTA_MIN, DELTA_MAX),
+                         mu=RV("uniform", MU_MIN, MU_MAX),
+                         alpha=RV("uniform", ALPHA_MIN, ALPHA_MAX),
+                         lambda0=RV("uniform", LAMBDA0_MIN, LAMBDA0_MAX),
+                         C_lambda=RV("uniform", C_LAMBDA_MIN, C_LAMBDA_MAX),
+                         delta_S=RV("uniform", DELTAS_MIN, DELTAS_MAX))
 
-# Simulate "true" summary statistics
-p_true = preisSim(param_true)
-p_true.to_csv(os.path.join(temp_output_folder, "p_true.csv"), header=False,
-              index=False)
-# p_true_real = pd.read_csv(os.path.join(PROCESSED_FOLDER,
-#                                        "Log_Original_Price_Bars_2300.csv"), header=None)
+    # define "true" parameters to calibrate
+    param_true = {"delta": DELTA_TRUE,
+                  "mu": MU_TRUE,
+                  "alpha": ALPHA_TRUE,
+                  "lambda0": LAMBDA0_TRUE,
+                  "C_lambda": C_LAMBDA_TRUE,
+                  "delta_S": DELTA_S_TRUE}
 
-p_true_SS = all_summary_stats(p_true, p_true)
 
-# Initialise ABCSMC model parameters
-abc = ABCSMC(models=sum_stat_sim,
-             parameter_priors=prior,
-             distance_function=SMCABC_DISTANCE,
-             population_size=SMCABC_POPULATION_SIZE,
-             sampler=SMCABC_SAMPLER,
-             transitions=SMCABC_TRANSITIONS,
-             eps=SMCABC_EPS,
-             acceptor=SMCABC_ACCEPTOR)
 
-# Set up SQL storage facility
-db = "sqlite:///" + os.path.join(temp_output_folder, "results" + version_number + ".db")
+    # Simulate "true" summary statistics
+    p_true = preisSim(param_true)
+    p_true.to_csv(os.path.join(temp_output_folder, "p_true.csv"), header=False,
+                  index=False)
+    # p_true_real = pd.read_csv(os.path.join(PROCESSED_FOLDER,
+    #                                        "Log_Original_Price_Bars_2300.csv"), header=None)
 
-# Input SMCABC SQL and observed summary stats
-abc.new(db, p_true_SS)
+    p_true_SS = all_summary_stats(p_true, p_true)
+
+    # Initialise ABCSMC model parameters
+    abc = ABCSMC(models=sum_stat_sim,
+                 parameter_priors=prior,
+                 distance_function=SMCABC_DISTANCE,
+                 population_size=SMCABC_POPULATION_SIZE,
+                 sampler=SMCABC_SAMPLER,
+                 transitions=SMCABC_TRANSITIONS,
+                 eps=SMCABC_EPS,
+                 acceptor=SMCABC_ACCEPTOR)
+
+    # Set up SQL storage facility
+    db = "sqlite:///" + os.path.join(temp_output_folder, "results" + version_number + ".db")
+
+    # Input SMCABC SQL and observed summary stats
+    abc.new(db, p_true_SS)
