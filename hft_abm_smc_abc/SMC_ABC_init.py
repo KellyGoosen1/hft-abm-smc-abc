@@ -8,11 +8,11 @@ from hurst import compute_Hc
 from scipy import stats
 import statsmodels as sm
 from statsmodels import tsa
-from statsmodels.tsa import arima_process, arima_model, stattools
+from statsmodels.tsa import stattools
 
-from pyabc import Distribution, RV, ABCSMC, UniformAcceptor
+from pyabc import Distribution, RV, ABCSMC
 from hft_abm_smc_abc.config import DELTA_TRUE, MU_TRUE, ALPHA_TRUE, LAMBDA0_TRUE, C_LAMBDA_TRUE, DELTA_S_TRUE, \
-    WORK_DIR, temp_output_folder, version_number, PROCESSED_FOLDER, \
+    temp_output_folder, version_number, \
     DELTA_MIN, DELTA_MAX, MU_MIN, MU_MAX, ALPHA_MIN, ALPHA_MAX, LAMBDA0_MIN, LAMBDA0_MAX, \
     C_LAMBDA_MIN, C_LAMBDA_MAX, DELTAS_MIN, DELTAS_MAX, SMCABC_DISTANCE, SMCABC_POPULATION_SIZE, SMCABC_SAMPLER, \
     SMCABC_TRANSITIONS, SMCABC_EPS, SMCABC_ACCEPTOR
@@ -130,9 +130,8 @@ def sum_stat_sim(parameters):
     # summary statistics
     return all_summary_stats(price_path, p_true)
 
+
 if __name__ == '__main__':
-
-
     # Parameters as Random Variables
     prior = Distribution(delta=RV("uniform", DELTA_MIN, DELTA_MAX),
                          mu=RV("uniform", MU_MIN, MU_MAX),
@@ -148,8 +147,6 @@ if __name__ == '__main__':
                   "lambda0": LAMBDA0_TRUE,
                   "C_lambda": C_LAMBDA_TRUE,
                   "delta_S": DELTA_S_TRUE}
-
-
 
     # Simulate "true" summary statistics
     p_true = preisSim(param_true)

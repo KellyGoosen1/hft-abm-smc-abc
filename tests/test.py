@@ -6,12 +6,11 @@ import numpy as np
 from hurst import compute_Hc
 from scipy import stats
 import pandas as pd
-from hft_abm_smc_abc.config import PRICE_PATH_DIVIDER, TIME_HORIZON, P_0, MC_STEPS, N_A
-from hft_abm_smc_abc.config import DELTA_TRUE, MU_TRUE, ALPHA_TRUE, LAMBDA0_TRUE,C_LAMBDA_TRUE, DELTA_S_TRUE
-
-
+from hft_abm_smc_abc.config import DELTA_TRUE, MU_TRUE, ALPHA_TRUE, LAMBDA0_TRUE, C_LAMBDA_TRUE, DELTA_S_TRUE
 
 np.random.seed(123)
+
+
 def accept_pos(x):
     """Outputs true if entire vector is positive"""
 
@@ -36,7 +35,6 @@ def summary_stats_extra(x):
             }
 
 
-
 def all_summary_stats(price_sim, price_obs):
     """ouptuts all summary statistics of price path compared to true price path (path_obs)"""
 
@@ -53,7 +51,6 @@ def all_summary_stats(price_sim, price_obs):
             "std": s1.loc["std"],
             **s2,
             **ks_stat}
-
 
 
 def preisSim(parameters):
@@ -75,7 +72,6 @@ def preisSim(parameters):
     # continue until price path simulated is all positive
     positive_price_path = False
     while not positive_price_path:
-
         # Initialize preis model class with specified parameters
         p = PreisModel(N_A=N_A,
                        delta=parameters["delta"],
@@ -99,13 +95,12 @@ def preisSim(parameters):
         positive_price_path = accept_pos(p.intradayPrice)
 
     # Log and divide price path by 1000, Convert to pandas dataframe
-    price_path = pd.DataFrame(np.log(p.intradayPrice  / PRICE_PATH_DIVIDER))
+    price_path = pd.DataFrame(np.log(p.intradayPrice / PRICE_PATH_DIVIDER))
     return price_path
 
 
 def main():
-
-    #define "true" parameters to calibrate
+    # define "true" parameters to calibrate
     param_true = {"delta": DELTA_TRUE,
                   "mu": MU_TRUE,
                   "alpha": ALPHA_TRUE,
@@ -113,34 +108,28 @@ def main():
                   "C_lambda": C_LAMBDA_TRUE,
                   "delta_S": DELTA_S_TRUE}
 
-
     price_path = preisSim(param_true)
 
     # p_true_SS = all_summary_stats(price_path, price_path)
 
-    return(price_path)
-
+    return (price_path)
 
 
 p_true_SS = main()
 p_true_SS.to_csv("new_test_case.csv", index=False, header=False)
 
-
 original = pd.read_csv("original_test_case.csv", header=None)
 
 new_case = pd.read_csv("new_test_case.csv", header=None)
 
+print(all(round(original.apply(float, axis=1), 0) == round(new_case.apply(float, axis=1), 0)))
 
-print(all(round(original.apply(float, axis=1),0)==round(new_case.apply(float, axis=1),0)))
+profiler = Profile()
+profiler.runctx(
+    "main()",
+    locals(), globals())
+#
+from pyprof2calltree import convert, visualize
 
-
-# profiler = Profile()
-# profiler.runctx(
-#      "main()",
-#      locals(), globals())
-# #
-# from pyprof2calltree import convert, visualize
-# visualize(profiler.getstats())                            # run kcachegrind
-# convert(profiler.getstats(), 'profiling_results.kgrind')  # save for later
-
-
+visualize(profiler.getstats())  # run kcachegrind
+convert(profiler.getstats(), 'profiling_results.kgrind')  # save for later

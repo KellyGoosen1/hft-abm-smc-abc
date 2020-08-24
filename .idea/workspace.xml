@@ -2,12 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1139fb3d-e3fc-4406-a403-a20ed25b1632" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/hft_abm_smc_abc/ARMACalibrationExample.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/ARMACalibrationExample.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/ARMACalibrationExample.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC_init.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/SMC_ABC_init.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/preisOrderBookSeed.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/preisOrderBookSeed.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/preisSeed.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/preisSeed.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hft_abm_smc_abc/stylised_facts.py" beforeDir="false" afterPath="$PROJECT_DIR$/hft_abm_smc_abc/stylised_facts.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/opensqlhistory.py" beforeDir="false" afterPath="$PROJECT_DIR$/opensqlhistory.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -187,6 +191,7 @@
       <workItem from="1597657722334" duration="24000" />
       <workItem from="1597913043521" duration="17236000" />
       <workItem from="1597942703771" duration="9659000" />
+      <workItem from="1598260224563" duration="605000" />
     </task>
     <servers />
   </component>
@@ -211,7 +216,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/tests/test.py</url>
-          <line>133</line>
+          <line>124</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
@@ -231,17 +236,17 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/hft_abm_smc_abc/stylised_facts.py</url>
-          <line>79</line>
+          <line>16</line>
           <option name="timeStamp" value="12" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/hft_abm_smc_abc/stylised_facts.py</url>
-          <line>172</line>
+          <line>109</line>
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/hft_abm_smc_abc/stylised_facts.py</url>
-          <line>209</line>
+          <line>207</line>
           <option name="timeStamp" value="14" />
         </line-breakpoint>
       </breakpoints>

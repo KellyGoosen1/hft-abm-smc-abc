@@ -1,10 +1,9 @@
 from pyabc import History
 import matplotlib.pyplot as plt
 from hft_abm_smc_abc.config import DELTA_TRUE, MU_TRUE, ALPHA_TRUE, LAMBDA0_TRUE, C_LAMBDA_TRUE, DELTA_S_TRUE, \
-    WORK_DIR, temp_output_folder, version_number, PROCESSED_FOLDER, \
     DELTA_MIN, DELTA_MAX, MU_MIN, MU_MAX, ALPHA_MIN, ALPHA_MAX, LAMBDA0_MIN, LAMBDA0_MAX, \
-    C_LAMBDA_MIN, C_LAMBDA_MAX, DELTAS_MIN, DELTAS_MAX, SMCABC_DISTANCE, SMCABC_POPULATION_SIZE, SMCABC_SAMPLER, \
-    SMCABC_TRANSITIONS, SMCABC_EPS
+    C_LAMBDA_MIN, C_LAMBDA_MAX, DELTAS_MIN, DELTAS_MAX, SMCABC_POPULATION_SIZE
+
 import pyabc
 from scipy import stats
 
@@ -22,7 +21,6 @@ def plot_coonvergence(history, parameter, range_min, range_max, true_value, ax):
     ax.legend(prop={'size': 6});
 
 
-
 def posterior_mean_and_credibility_intervals(
         h_loaded, param="C_lambda", rounding=4):
     data = h_loaded.get_distribution(t=3)[0][param]
@@ -38,20 +36,16 @@ def posterior_mean_and_credibility_intervals(
 
 
 def posterior_mean(h_loaded, param_list):
-
     mean_dict = {}
 
     for param in param_list:
-
         data = h_loaded.get_distribution(t=3)[0][param]
 
         res_mean, res_var, res_std = stats.bayes_mvs(data, alpha=0.90)
 
         mean_dict.update({param: res_mean[0]})
 
-
     return mean_dict
-
 
 
 if __name__ == '__main__':

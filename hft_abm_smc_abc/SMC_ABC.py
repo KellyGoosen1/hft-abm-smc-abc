@@ -1,8 +1,9 @@
 """Purpose of this script is to run SMC ABC given abc object and model details"""
-import sys; print('Python %s on %s' % (sys.version, sys.platform))
+import sys;
+
+print('Python %s on %s' % (sys.version, sys.platform))
 sys.path.extend(['C:\\My Work Documents\\repo\\hft_abm_smc_abc', 'C:/My Work Documents/repo/hft_abm_smc_abc',
                  '/home/gsnkel001/hft_abm_smc_abc'])
-
 
 from pyabc import sge
 from hft_abm_smc_abc.SMC_ABC_init import abc, db
@@ -19,10 +20,8 @@ print(sge.nr_cores_available())
 print(version_number)
 
 if __name__ == '__main__':
-
     os.environ['NUMEXPR_MAX_THREADS'] = '40'
     print("Reutrn NUMEXPR_MAX_THREADS: " + os.environ.get('NUMEXPR_MAX_THREADS'))
-
 
     # for debugging
     df_logger = logging.getLogger('Distance')
@@ -44,6 +43,3 @@ if __name__ == '__main__':
 
     with open(os.path.join(temp_output_folder, "db.txt"), "w") as text_file:
         print(db, file=text_file)
-
-
-

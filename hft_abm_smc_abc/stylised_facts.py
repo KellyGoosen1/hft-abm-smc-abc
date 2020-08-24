@@ -12,69 +12,6 @@ from pyabc import History
 
 np.random.seed(12345)
 
-# real world hft data
-midprice = pd.read_csv(os.path.join(PROCESSED_FOLDER,
-                                    "Log_Original_Price_Bars_2300.csv"), header=None)
-
-
-# simulated hft data
-def preisSim_object(parameters):
-    """Outputs: summary statistics from Preis model,
-     Inputs: dictionary with delta, mu, alpha, lambda0, C_lambda, delta
-     Static parameters: L, p_0, MCSteps, N_A"""
-
-    # Import libraries to be used in model simulation
-    from hft_abm_smc_abc.preisSeed import PreisModel
-    from hft_abm_smc_abc.config import PRICE_PATH_DIVIDER, TIME_HORIZON, P_0, MC_STEPS, N_A
-    import pandas as pd
-    from hft_abm_smc_abc.SMC_ABC_init import accept_pos
-
-    # Initialize preis model class with specified parameters
-    p = PreisModel(N_A=N_A,
-                   delta=parameters["delta"],
-                   mu=parameters["mu"],
-                   alpha=parameters["alpha"],
-                   lambda_0=parameters["lambda0"],
-                   C_lambda=parameters["C_lambda"],
-                   delta_S=parameters["delta_S"],
-                   p_0=P_0,
-                   T=TIME_HORIZON,
-                   MC=MC_STEPS)
-
-    # Start model
-    p.simRun()
-    p.initialize()
-
-    # Simulate price path for L time-steps
-    p.simulate()
-
-    # ensure no negative prices
-    positive_price_path = accept_pos(p.intradayPrice)
-
-    # poor results - set to arbitrarily high number
-    if not positive_price_path:
-        price_path = pd.DataFrame([9999] * TIME_HORIZON)
-    else:
-        # Log and divide price path by 1000, Convert to pandas dataframe
-        price_path = pd.DataFrame(np.log(p.intradayPrice / PRICE_PATH_DIVIDER))
-
-    return price_path, p
-
-
-param_list = ["mu", "lambda0", "delta", "delta_S", "alpha", "C_lambda"]
-
-# load history
-h_loaded = History("sqlite:///"
-                   + "hft_abm_smc_abc/resultsReal_Data_Small_Test - Smaller Test - eps1_negfix_pop6_pop301597579353.943031.db")
-
-posterior_mean_dict = posterior_mean(h_loaded, param_list)
-
-log_price_path, preis_object = preisSim_object(parameters=posterior_mean_dict)
-
-log_price_path = log_price_path.rename(columns={0: "Simulated Midprice"})
-
-midprice = midprice.rename(columns={0: "Midprice"})
-
 
 class StylisedFacts:
 
@@ -191,27 +128,88 @@ class StylisedFacts:
         acf_r.show(figsize=(4, 4))
 
 
-S = StylisedFacts(midprice)
+# simulated hft data
+def preisSim_object(parameters):
+    """Outputs: summary statistics from Preis model,
+     Inputs: dictionary with delta, mu, alpha, lambda0, C_lambda, delta
+     Static parameters: L, p_0, MCSteps, N_A"""
 
-S.plot_returns()
+    # Import libraries to be used in model simulation
+    from hft_abm_smc_abc.preisSeed import PreisModel
+    from hft_abm_smc_abc.config import PRICE_PATH_DIVIDER, TIME_HORIZON, P_0, MC_STEPS, N_A
+    import pandas as pd
+    from hft_abm_smc_abc.SMC_ABC_init import accept_pos
 
-# distribution, non gaussian, Leptokurtic returns
-S.plot_dbn()
-S.qq_plot()
-S.descriptive_statistics()
+    # Initialize preis model class with specified parameters
+    p = PreisModel(N_A=N_A,
+                   delta=parameters["delta"],
+                   mu=parameters["mu"],
+                   alpha=parameters["alpha"],
+                   lambda_0=parameters["lambda0"],
+                   C_lambda=parameters["C_lambda"],
+                   delta_S=parameters["delta_S"],
+                   p_0=P_0,
+                   T=TIME_HORIZON,
+                   MC=MC_STEPS)
+
+    # Start model
+    p.simRun()
+    p.initialize()
+
+    # Simulate price path for L time-steps
+    p.simulate()
+
+    # ensure no negative prices
+    positive_price_path = accept_pos(p.intradayPrice)
+
+    # poor results - set to arbitrarily high number
+    if not positive_price_path:
+        price_path = pd.DataFrame([9999] * TIME_HORIZON)
+    else:
+        # Log and divide price path by 1000, Convert to pandas dataframe
+        price_path = pd.DataFrame(np.log(p.intradayPrice / PRICE_PATH_DIVIDER))
+
+    return price_path, p
 
 
-# absense of autocorrelation or raw returns
-# volatility clustering
-# order flow clustering
-S.all_autocorrelation_plots(lags=21)
+if __name__ == '__main__':
+    ###### simulatee hft data ######
+    h_loaded = History("sqlite:///"
+                       + "hft_abm_smc_abc/resultsReal_Data_Small_Test - Smaller Test - eps1_negfix_pop6_pop301597579353.943031.db")
 
+    param_list = ["mu", "lambda0", "delta", "delta_S", "alpha", "C_lambda"]
 
-sim = StylisedFacts(log_price_path)
-sim.plot_returns()
+    posterior_mean_dict = posterior_mean(h_loaded, param_list)
 
-sim.plot_dbn()
-sim.qq_plot()
-sim.descriptive_statistics()
+    log_price_path, preis_object = preisSim_object(parameters=posterior_mean_dict)
 
-sim.all_autocorrelation_plots(lags=21)
+    log_price_path = log_price_path.rename(columns={0: "Simulated Midprice"})
+
+    ###### real world hft data ######
+    midprice = pd.read_csv(os.path.join(PROCESSED_FOLDER,
+                                        "Log_Original_Price_Bars_2300.csv"), header=None)
+
+    midprice = midprice.rename(columns={0: "Midprice"})
+
+    S = StylisedFacts(midprice)
+
+    S.plot_returns()
+
+    # distribution, non gaussian, Leptokurtic returns
+    S.plot_dbn()
+    S.qq_plot()
+    S.descriptive_statistics()
+
+    # absense of autocorrelation or raw returns
+    # volatility clustering
+    # order flow clustering
+    S.all_autocorrelation_plots(lags=21)
+
+    sim = StylisedFacts(log_price_path)
+    sim.plot_returns()
+
+    sim.plot_dbn()
+    sim.qq_plot()
+    sim.descriptive_statistics()
+
+    sim.all_autocorrelation_plots(lags=21)

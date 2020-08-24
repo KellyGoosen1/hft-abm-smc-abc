@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 
+
 class PreisOrderBook:
     # Attributes
     def __init__(limitOrderBook):
@@ -190,7 +191,7 @@ class PreisOrderBook:
                 higherOrders = limitOrderBook.orderBook["limitOrderPrice"] > limitPrice
                 sellOrders = limitOrderBook.orderBook["limitOrderType"] == 1
 
-                higherSellOrders = int(np.floor(np.sum(higherOrders.values*sellOrders.values)))
+                higherSellOrders = int(np.floor(np.sum(higherOrders.values * sellOrders.values)))
 
                 # place order in correct location
                 # Insert order:

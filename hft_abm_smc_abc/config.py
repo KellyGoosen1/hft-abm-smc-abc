@@ -3,7 +3,6 @@ import os
 import time
 
 from pyabc import MedianEpsilon, MultivariateNormalTransition, \
-    LocalTransition, Distribution, RV, ABCSMC, sge, \
     AdaptivePNormDistance, UniformAcceptor
 from pyabc.sampler import MulticoreEvalParallelSampler
 import pyabc
@@ -30,14 +29,13 @@ temp_output_folder = PROCESSED_FOLDER + '/' + version_number
 if not os.path.exists(temp_output_folder):
     os.mkdir(temp_output_folder)
 
-
 # True price trajectory
-DELTA_TRUE = 0.0250         # limit order cancellation rate
-MU_TRUE = 0.0250            # rate of market orders
-ALPHA_TRUE = 0.15           # rate of limit orders
-LAMBDA0_TRUE = 100          # initial order placement depth
-C_LAMBDA_TRUE = 10          # limit order placement depth coefficient
-DELTA_S_TRUE = 0.0010       # mean reversion strength parameter
+DELTA_TRUE = 0.0250  # limit order cancellation rate
+MU_TRUE = 0.0250  # rate of market orders
+ALPHA_TRUE = 0.15  # rate of limit orders
+LAMBDA0_TRUE = 100  # initial order placement depth
+C_LAMBDA_TRUE = 10  # limit order placement depth coefficient
+DELTA_S_TRUE = 0.0010  # mean reversion strength parameter
 
 # prior range
 DELTA_MIN, DELTA_MAX = 0, 0.05
@@ -49,10 +47,10 @@ DELTAS_MIN, DELTAS_MAX = 0, 0.005
 
 # Fixed Parameters
 PRICE_PATH_DIVIDER = 100
-TIME_HORIZON = 3200                     # time horizon
-P_0 = 238.745 * PRICE_PATH_DIVIDER      # initial price
-MC_STEPS = 10 ** 5                      # MC steps to generate variance
-N_A = 125                               # no. market makers = no. liquidity providers
+TIME_HORIZON = 3200  # time horizon
+P_0 = 238.745 * PRICE_PATH_DIVIDER  # initial price
+MC_STEPS = 10 ** 5  # MC steps to generate variance
+N_A = 125  # no. market makers = no. liquidity providers
 
 # SMCABC parameters:
 SMCABC_DISTANCE = AdaptivePNormDistance(
