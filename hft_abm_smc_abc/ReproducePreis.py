@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 # Import random numbers from Matlab generated csv
-ran_seq_df = pd.read_csv('ran3.csv', header=None)  # seed =1
+ran_seq_df = pd.xread_csv('ran3.csv', header=None)  # seed =1
 ran_seq = ran_seq_df[0].values
 
 # Construct PreisModel object with default parameters
