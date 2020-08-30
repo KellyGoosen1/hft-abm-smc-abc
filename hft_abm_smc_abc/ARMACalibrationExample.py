@@ -77,8 +77,8 @@ def sum_stat_sim(parameters):
 def arma_model(p):
     # Further, due to the conventions used in signal processing used in signal.lfilter vs.
     # conventions in statistics for ARMA processes, the AR parameters should have the opposite sign of what you might expect.
-    arparams = np.array([p["ar1"]])
-    maparams = np.array([p["ma1"]])
+    arparams = np.array([p["AR"]])
+    maparams = np.array([p["MA"]])
 
     # coefficients
     # coefficient on the zero-lag. This is typically 1.
@@ -100,17 +100,20 @@ def plot_coonvergence(history, parameter, range_min, range_max, true_value, ax):
             x=parameter, ax=ax,
             label="PDF t={}".format(t))
     ax.axvline(true_value, color="k", linestyle="dashed");
+    ax.axvline(true_value, color="k", linestyle="dashed");
     ax.legend(prop={'size': 6});
 
 
 if __name__ == '__main__':
 
     # true model parameter
-    param_dict = {"ar1": 0.7, "ma1": 0.8}
+    param_dict = {"AR": 0.7, "MA": 0.8}
 
     # observation
     price_obs = arma_model(param_dict)
     price_obs[0].plot()
+    plt.xlabel("Time-steps")
+    plt.ylabel("ARMA(0.7, 0.8)")
     plt.show()
 
     # test optimisation:
@@ -120,8 +123,8 @@ if __name__ == '__main__':
 
     # prior distribution
     # Parameters as Random Variables
-    prior = Distribution(ar1=RV("uniform", 0, 1),
-                         ma1=RV("uniform", 0, 1))
+    prior = Distribution(AR=RV("uniform", 0, 1),
+                         MA=RV("uniform", 0, 1))
 
     # database
     db_path = pyabc.create_sqlite_db_id(file_="arma_model1.db")
@@ -146,14 +149,17 @@ if __name__ == '__main__':
     plt.show()
 
     fig, axs = plt.subplots(2, 1)
-    plot_coonvergence(history1, 'ar1', 0, 1, 0.7, ax=axs[0])
-    plot_coonvergence(history1, 'ma1', 0, 1, 0.8, ax=axs[1])
+    plot_coonvergence(history1, 'AR', 0, 1, 0.7, ax=axs[0])
+    plot_coonvergence(history1, 'MA', 0, 1, 0.8, ax=axs[1])
     plt.show()
+
+    plt.gcf().set_size_inches((4, 4))
+
 
     fig, axs = plt.subplots(5, 1)
     for t in range(5):
         df, w = abc.history.get_distribution(0, t)
-        plot_kde_2d(df, w, "ar1", "ma1",
+        plot_kde_2d(df, w, "AR", "MA",
                     xmin=0, xmax=1,
                     ymin=0, ymax=1,
                     numx=100, numy=100, ax=axs[t])
@@ -163,6 +169,6 @@ if __name__ == '__main__':
                        label="Observation");
         axs[t].legend();
         axs[t].set_title("PDF t={}".format(t + 1))
-    fig.set_size_inches(5, 8, forward=True)
+    fig.set_size_inches(4, 10, forward=True)
 
     plt.show()

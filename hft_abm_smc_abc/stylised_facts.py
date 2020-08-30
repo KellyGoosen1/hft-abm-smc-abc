@@ -7,7 +7,7 @@ import statsmodels.tsa.api as smt
 import os
 import pingouin as pg
 from hft_abm_smc_abc.config import PROCESSED_FOLDER, TIME_HORIZON
-from opensqlhistory import posterior_mean
+from hft_abm_smc_abc.openSMCABChistory import posterior_mean
 from pyabc import History
 
 np.random.seed(12345)
