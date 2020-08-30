@@ -1,6 +1,6 @@
 # Setup
 
-Install poetry from here \href{https://python-poetry.org/docs/#installation}{https://python-poetry.org/docs/#installation}. Then, after cloning the hft-abm-smc-abc repository, in the terminal run 'poetry install'. This automatically installs all the libraries required to run the code in the hft-abm-smc-abc repository \citep{goosen_2020}.
+Install poetry from here https://python-poetry.org/docs/#installation. Then, after cloning the hft-abm-smc-abc repository, in the terminal run 'poetry install'. This automatically installs all the libraries required to run the code in the hft-abm-smc-abc repository \citep{goosen_2020}.
 
 ## Preis-Golke-Paul-Schneider Agent Based Model
 To run the PGPS Model (Preis et al., 2006) the Python script files preisOrderBookSeed.py and preisSeed.py along with the config.py are required to initialise the limit order book and execute PGPS Model given the parameters specified in the config.py file. 
